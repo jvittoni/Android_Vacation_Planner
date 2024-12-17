@@ -59,6 +59,16 @@ public class VacationList extends AppCompatActivity {
         return true;
     }
 
+    protected void onResume() {
+        super.onResume();
+        List<Vacation> allVacations = repository.getxAllVacations();
+        RecyclerView recyclerView = findViewById(R.id.vacationrecyclerview);
+        final VacationAdapter vacationAdapter= new VacationAdapter(this);
+        recyclerView.setAdapter(vacationAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        vacationAdapter.setVacations(allVacations);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.sample) {
