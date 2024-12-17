@@ -10,12 +10,12 @@ public class Vacation {
     @PrimaryKey(autoGenerate = true)
     private int vacationID;
     private String vacationName;
-    private double price;
+    private String hotelName;
 
-    public Vacation(int vacationID, String vacationName, double price) {
+    public Vacation(int vacationID, String vacationName, String hotelName) {
         this.vacationID = vacationID;
         this.vacationName = vacationName;
-        this.price = price;
+        this.hotelName = hotelName;
     }
 
     public int getVacationID() {
@@ -34,11 +34,11 @@ public class Vacation {
         this.vacationName = vacationName;
     }
 
-    public double getPrice() {
-        return price;
+    public String getHotelName() {
+        return hotelName;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
     }
 }

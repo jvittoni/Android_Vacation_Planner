@@ -65,10 +65,10 @@ public class VacationList extends AppCompatActivity {
             repository = new Repository(getApplication());
 //            Toast.makeText(VacationList.this,"put in sample data", Toast.LENGTH_LONG).show();
 
-            Vacation vacation = new Vacation(0, "France", 2000.0);
+            Vacation vacation = new Vacation(0, "France", "hotel1");
             repository.insert(vacation);
 
-            vacation = new Vacation(0, "Italy", 2000.0);
+            vacation = new Vacation(0, "Italy", "hotel2");
             repository.insert(vacation);
 
             Excursion excursion = new Excursion(0, "Hiking", 10, 1);

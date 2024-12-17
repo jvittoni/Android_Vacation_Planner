@@ -20,10 +20,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class VacationDetails extends AppCompatActivity {
 
     String name;
-    double price;
+    String hotel;
     int vacationID;
     EditText editName;
-    EditText editPrice;
+    EditText editHotel;
 
     Repository repository;
 
@@ -34,7 +34,13 @@ public class VacationDetails extends AppCompatActivity {
         setContentView(R.layout.activity_vacation_details);
 
         editName = findViewById(R.id.titletext);
-        editPrice =
+        editHotel = findViewById(R.id.placeholder);
+        vacationID = getIntent().getIntExtra("id", -1);
+        name = getIntent().getStringExtra("name");
+        hotel = getIntent().getStringExtra("hotel");
+        editName.setText(name);
+        editHotel.setText(hotel);
+
 
         FloatingActionButton fab = findViewById(R.id.floatingActionButton2);
         fab.setOnClickListener(new View.OnClickListener() {
