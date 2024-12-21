@@ -1,11 +1,15 @@
 package com.example.w803vacation.UI;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -23,6 +27,8 @@ import com.example.w803vacation.entities.Vacation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class VacationDetails extends AppCompatActivity {
@@ -32,6 +38,18 @@ public class VacationDetails extends AppCompatActivity {
     int vacationID;
     EditText editName;
     EditText editHotel;
+
+
+    String startVacationDate;
+    String endVacationDate;
+
+    TextView editStartVacaDate;
+    TextView editEndVacaDate;
+
+    DatePickerDialog.OnDateSetListener startVacaDate;
+    DatePickerDialog.OnDateSetListener endVacaDate;
+    final Calendar myCalendarStart = Calendar.getInstance();
+    final Calendar myCalendarEnd = Calendar.getInstance();
 
     Vacation currentVacation;
     int numExcursions;
@@ -45,12 +63,20 @@ public class VacationDetails extends AppCompatActivity {
         setContentView(R.layout.activity_vacation_details);
 
         editName = findViewById(R.id.titletext);
-        editHotel = findViewById(R.id.placeholder);
+        editHotel = findViewById(R.id.hoteltext);
         vacationID = getIntent().getIntExtra("id", -1);
         name = getIntent().getStringExtra("name");
         hotel = getIntent().getStringExtra("hotel");
         editName.setText(name);
         editHotel.setText(hotel);
+
+        //
+        editStartVacaDate = findViewById(R.id.selectStart);
+        editEndVacaDate = findViewById(R.id.selectEnd);
+        startVacationDate = getIntent().getStringExtra("startVacationDate");
+        endVacationDate = getIntent().getStringExtra("endVacationDate");
+        editStartVacaDate.setText(startVacationDate);
+        editEndVacaDate.setText(endVacationDate);
 
 
         FloatingActionButton fab = findViewById(R.id.floatingActionButton2);
@@ -80,6 +106,89 @@ public class VacationDetails extends AppCompatActivity {
         }
         excursionAdapter.setExcursions(filteredExcursions);
 
+        editStartVacaDate.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String info = editStartVacaDate.getText().toString();
+
+                // If the field is empty, set a default value
+                if(info.equals("")) {
+                    info = "02/10/24"; // Default value, could also use current date
+                }
+
+                // Instead of parsing, directly set the calendar to the default date or current date
+                myCalendarStart.setTime(new Date());
+                new DatePickerDialog(VacationDetails.this, startVacaDate, myCalendarStart
+                        .get(Calendar.YEAR), myCalendarStart.get(Calendar.MONTH),
+                        myCalendarStart.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        editEndVacaDate.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                String info = editEndVacaDate.getText().toString();
+
+                // If the field is empty, set a default value
+                if(info.equals("")) {
+                    info = "02/10/24"; // Default value, could also use current date
+                }
+
+                // Instead of parsing, directly set the calendar to the default date or current date
+                myCalendarEnd.setTime(new Date());
+                new DatePickerDialog(VacationDetails.this, endVacaDate, myCalendarEnd
+                        .get(Calendar.YEAR), myCalendarEnd.get(Calendar.MONTH),
+                        myCalendarEnd.get(Calendar.DAY_OF_MONTH)).show();
+
+            }
+        });
+
+        startVacaDate = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+
+                myCalendarStart.set(Calendar.YEAR, year);
+                myCalendarStart.set(Calendar.MONTH, monthOfYear);
+                myCalendarStart.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+
+                updateLabelStart();
+            }
+
+        };
+
+        endVacaDate = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+
+                myCalendarEnd.set(Calendar.YEAR, year);
+                myCalendarEnd.set(Calendar.MONTH, monthOfYear);
+                myCalendarEnd.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+
+                updateLabelEnd();
+            }
+
+        };
+
+    }
+
+    private void updateLabelStart() {
+        // Directly set the text without any date format validation
+        editStartVacaDate.setText(myCalendarStart.getTime().toString());
+    }
+
+    private void updateLabelEnd() {
+        // Directly set the text without any date format validation
+        editEndVacaDate.setText(myCalendarEnd.getTime().toString());
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -99,11 +208,11 @@ public class VacationDetails extends AppCompatActivity {
                 if (repository.getxAllVacations().size() == 0) vacationID = 1;
                 else
                     vacationID = repository.getxAllVacations().get(repository.getxAllVacations().size() - 1).getVacationID() + 1;
-                vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString());
+                vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString(), editStartVacaDate.getText().toString(), editEndVacaDate.getText().toString());
                 repository.insert(vacation);
                 this.finish();
             } else {
-                vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString());
+                vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString(), editStartVacaDate.getText().toString(), editEndVacaDate.getText().toString());
                 repository.update(vacation);
                 this.finish();
             }

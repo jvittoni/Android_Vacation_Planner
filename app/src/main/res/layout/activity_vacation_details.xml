@@ -10,10 +10,10 @@
     <ScrollView
         android:id="@+id/scrollview2"
         android:layout_width="409dp"
-        android:layout_height="209dp"
+        android:layout_height="309dp"
         android:layout_marginStart="1dp"
         android:paddingTop="55dp"
-        android:background="#00BCD4"
+        android:background="#d2f5fe"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -31,13 +31,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:padding="10dp"
-                    android:text="placeholder: "/>
+                    android:text="Vacation Title: "/>
 
                 <EditText
                     android:id="@+id/titletext"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:hint="title placeholder "/>
+                    android:hint="name of vacation "/>
             </LinearLayout>
 
             <LinearLayout
@@ -49,13 +49,57 @@
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:padding="10dp"
-                    android:text="placeholder: "/>
+                    android:text="Hotel: "/>
 
                 <EditText
-                    android:id="@+id/placeholder"
+                    android:id="@+id/hoteltext"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:hint="placeholder text"/>
+                    android:hint="name of hotel"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:padding="10dp"
+                    android:text="Start Date: "/>
+
+                <Button
+                    android:id="@+id/selectStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:hint="Select Start Date"
+                    android:inputType="date"
+                    android:textColor="#000000"
+                    android:backgroundTint="#faf6f6"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:padding="10dp"
+                    android:text="End Date: "/>
+
+                <Button
+                    android:id="@+id/selectEnd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:hint="Select End Date"
+                    android:inputType="date"
+                    android:textColor="#000000"
+                    android:backgroundTint="#faf6f6"/>
             </LinearLayout>
 
         </LinearLayout>
