@@ -22,10 +22,13 @@ import com.example.w803vacation.entities.Excursion;
 import com.example.w803vacation.entities.Vacation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class VacationDetails extends AppCompatActivity {
 
@@ -66,7 +69,7 @@ public class VacationDetails extends AppCompatActivity {
         editName.setText(name);
         editHotel.setText(hotel);
 
-        //
+        // Vacation Start Date & End Date
         editVacaStartDate = findViewById(R.id.selectStart);
         editVacaEndDate = findViewById(R.id.selectEnd);
         vacationStartDate = getIntent().getStringExtra("vacationStartDate");
@@ -74,12 +77,21 @@ public class VacationDetails extends AppCompatActivity {
         editVacaStartDate.setText(vacationStartDate);
         editVacaEndDate.setText(vacationEndDate);
 
+        // Format Validation
+        String myFormat = "MM/dd/yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
 
         FloatingActionButton fab = findViewById(R.id.floatingActionButton2);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 Intent intent = new Intent(VacationDetails.this, ExcursionDetails.class);
+                intent.putExtra("vacationID", vacationID);
+                intent.putExtra("vacationStartDate", vacationStartDate);
+                intent.putExtra("vacationEndDate", vacationEndDate);
                 startActivity(intent);
             }
         });
@@ -102,19 +114,21 @@ public class VacationDetails extends AppCompatActivity {
         }
         excursionAdapter.setExcursions(filteredExcursions);
 
+
         editVacaStartDate.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
+                Date date;
                 String info = editVacaStartDate.getText().toString();
 
-                // If the field is empty, set a default value
-                if(info.equals("")) {
-                    info = "02/10/24"; // Default value, could also use current date
+                if(info.equals(""))info="12/01/24";
+                try{
+                    myCalendarStart.setTime(sdf.parse(info));
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
 
-                // Instead of parsing, directly set the calendar to the default date or current date
-                myCalendarStart.setTime(new Date());
                 new DatePickerDialog(VacationDetails.this, vacaStartDate, myCalendarStart
                         .get(Calendar.YEAR), myCalendarStart.get(Calendar.MONTH),
                         myCalendarStart.get(Calendar.DAY_OF_MONTH)).show();
@@ -125,15 +139,16 @@ public class VacationDetails extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
+                Date date;
                 String info = editVacaEndDate.getText().toString();
 
-                // If the field is empty, set a default value
-                if(info.equals("")) {
-                    info = "02/10/24"; // Default value, could also use current date
+                if(info.equals(""))info="12/01/24";
+                try{
+                    myCalendarEnd.setTime(sdf.parse(info));
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
 
-                // Instead of parsing, directly set the calendar to the default date or current date
-                myCalendarEnd.setTime(new Date());
                 new DatePickerDialog(VacationDetails.this, vacaEndDate, myCalendarEnd
                         .get(Calendar.YEAR), myCalendarEnd.get(Calendar.MONTH),
                         myCalendarEnd.get(Calendar.DAY_OF_MONTH)).show();
@@ -146,12 +161,10 @@ public class VacationDetails extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                // TODO Auto-generated method stub
 
                 myCalendarStart.set(Calendar.YEAR, year);
                 myCalendarStart.set(Calendar.MONTH, monthOfYear);
                 myCalendarStart.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
 
                 updateLabelStart();
             }
@@ -163,12 +176,16 @@ public class VacationDetails extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                // TODO Auto-generated method stub
 
                 myCalendarEnd.set(Calendar.YEAR, year);
                 myCalendarEnd.set(Calendar.MONTH, monthOfYear);
                 myCalendarEnd.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
+                // Validate that vacation end date is after vacation start date
+                if (myCalendarEnd.before(myCalendarStart)) {
+                    Toast.makeText(VacationDetails.this, "Vacation end date must be after vacation start date.", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 updateLabelEnd();
             }
@@ -178,13 +195,19 @@ public class VacationDetails extends AppCompatActivity {
     }
 
     private void updateLabelStart() {
-        // Directly set the text without any date format validation
-        editVacaStartDate.setText(myCalendarStart.getTime().toString());
+
+        String myFormat = "MM/dd/yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        editVacaStartDate.setText(sdf.format(myCalendarStart.getTime()));
     }
 
     private void updateLabelEnd() {
-        // Directly set the text without any date format validation
-        editVacaEndDate.setText(myCalendarEnd.getTime().toString());
+
+        String myFormat = "MM/dd/yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        editVacaEndDate.setText(sdf.format(myCalendarEnd.getTime()));
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
