@@ -11,5 +11,7 @@
         android:id="@+id/alertendvaca"/>
     <item android:title="Set Vacation Start and End Date Alert"
         android:id="@+id/alertbothvaca"/>
+    <item android:title="Share Vacation Details"
+        android:id="@+id/sharevaca"/>
 
 </menu>

@@ -61,6 +61,8 @@ public class VacationDetails extends AppCompatActivity {
     Random rand = new Random();
     int numAlert = rand.nextInt(99999);
 
+    List<Excursion> filteredExcursions = new ArrayList<>();
+
 
     Repository repository;
 
@@ -298,7 +300,27 @@ public class VacationDetails extends AppCompatActivity {
             return true;
         }
 
-
+        // Sharing Features
+        if (item.getItemId() == R.id.sharevaca) {
+            Intent sentIntent = new Intent();
+            sentIntent.setAction(Intent.ACTION_SEND);
+            sentIntent.putExtra(Intent.EXTRA_TITLE, "Sharing Vacation Details");
+            //need to put the items into a constructed String or else each item will replace the last
+            StringBuilder shareData = new StringBuilder();
+            shareData.append("Vacation Title: " + editName.getText().toString() + "\n");
+            shareData.append("Hotel Name: " + editHotel.getText().toString() + "\n");
+            shareData.append("Start Date: " + editVacaStartDate.getText().toString() + "\n");
+            shareData.append("End Date: " + editVacaEndDate.getText().toString() + "\n");
+//            for (int i = 0; i < filteredExcursions.size(); i++) {
+//                shareData.append("Excursion Title: " + (i + 1) + ": " + filteredExcursions.get(i).getExcursionName() + "\n");
+//                shareData.append("Excursion Date: " + (i + 1) + " Date: " + filteredExcursions.get(i).getExcursionDate() + "\n");
+//            }
+            sentIntent.putExtra(Intent.EXTRA_TEXT, shareData.toString());
+            sentIntent.setType("text/plain");
+            Intent shareIntent = Intent.createChooser(sentIntent, null);
+            startActivity(shareIntent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -323,5 +345,7 @@ public class VacationDetails extends AppCompatActivity {
         numAlert = rand.nextInt(99999);
         System.out.println("numAlert Vacation = " + numAlert);
     }
+
+
 
 }
