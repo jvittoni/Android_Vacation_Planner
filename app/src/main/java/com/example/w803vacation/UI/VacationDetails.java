@@ -1,6 +1,9 @@
 package com.example.w803vacation.UI;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -29,6 +32,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 public class VacationDetails extends AppCompatActivity {
 
@@ -52,6 +56,11 @@ public class VacationDetails extends AppCompatActivity {
 
     Vacation currentVacation;
     int numExcursions;
+
+    // Notification Alert
+    Random rand = new Random();
+    int numAlert = rand.nextInt(99999);
+
 
     Repository repository;
 
@@ -80,6 +89,8 @@ public class VacationDetails extends AppCompatActivity {
         // Format Validation
         String myFormat = "MM/dd/yy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        numAlert = rand.nextInt(99999);
 
 
         FloatingActionButton fab = findViewById(R.id.floatingActionButton2);
@@ -255,7 +266,62 @@ public class VacationDetails extends AppCompatActivity {
             }
             return true;
         }
+
+        // Set Vacation Start Date Alert
+        if (item.getItemId() == R.id.alertstartvaca) {
+            String dateFromScreen = editVacaStartDate.getText().toString();
+            String alert = "Vacation Starting Today: " + name;
+            alertPicker(dateFromScreen, alert);
+
+            return true;
+        }
+
+        // Set Vacation End Date Alert
+        if (item.getItemId() == R.id.alertendvaca) {
+            String dateFromScreen = editVacaEndDate.getText().toString();
+            String alert = "Vacation Ending Today: " + name;
+            alertPicker(dateFromScreen, alert);
+
+            return true;
+        }
+
+
+        // Set Vacation Start Date and End Date Alert
+        if (item.getItemId() == R.id.alertbothvaca) {
+            String dateFromScreen = editVacaStartDate.getText().toString();
+            String alert = "Vacation Starting Today: " + name;
+            alertPicker(dateFromScreen, alert);
+            dateFromScreen = editVacaEndDate.getText().toString();
+            alert = "Vacation Ending Today: " + name;
+            alertPicker(dateFromScreen, alert);
+
+            return true;
+        }
+
+
+
         return super.onOptionsItemSelected(item);
+    }
+
+    // Used for Vacation Start Date Alert, Vacation End Date Alert, & Both Vacation Date Alert
+    public void alertPicker(String dateFromScreen, String alert) {
+        String myFormat = "MM/dd/yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        Date myDate = null;
+        try {
+            myDate = sdf.parse(dateFromScreen);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Long trigger = myDate.getTime();
+        Intent intent = new Intent(VacationDetails.this, MyReceiver.class);
+        intent.putExtra("key", alert);
+//        PendingIntent sender = PendingIntent.getBroadcast(VacationDetails.this, ++MainActivity.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
+        PendingIntent sender = PendingIntent.getBroadcast(VacationDetails.this, numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, sender);
+        numAlert = rand.nextInt(99999);
+        System.out.println("numAlert Vacation = " + numAlert);
     }
 
 }

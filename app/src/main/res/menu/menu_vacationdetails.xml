@@ -5,5 +5,11 @@
         android:id="@+id/vacationsave"/>
     <item android:title="Delete Vacation"
         android:id="@+id/vacationdelete"/>
+    <item android:title="Set Vacation Start Date Alert"
+        android:id="@+id/alertstartvaca"/>
+    <item android:title="Set Vacation End Date Alert"
+        android:id="@+id/alertendvaca"/>
+    <item android:title="Set Vacation Start and End Date Alert"
+        android:id="@+id/alertbothvaca"/>
 
 </menu>
