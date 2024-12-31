@@ -81,10 +81,10 @@ public class VacationList extends AppCompatActivity {
             vacation = new Vacation(0, "France", "hotel2", "12/01/24", "12/30/24");
             repository.insert(vacation);
 
-            Excursion excursion = new Excursion(0, "Hiking", 10, 1);
+            Excursion excursion = new Excursion(0, "Hiking", 1,  "12/17/24");
             repository.insert(excursion);
 
-            excursion = new Excursion(0, "Snorkeling", 10, 1);
+            excursion = new Excursion(0, "Snorkeling", 1,  "12/29/24");
             repository.insert(excursion);
 
             return true;

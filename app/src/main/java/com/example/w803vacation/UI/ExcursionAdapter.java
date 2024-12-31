@@ -22,6 +22,8 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
     private final Context context;
 
     private final LayoutInflater xInflator;
+    private String vacationStartDate;
+    private String vacationEndDate;
 
     class ExcursionViewHolder extends RecyclerView.ViewHolder {
 
@@ -42,8 +44,10 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
                     Intent intent = new Intent(context, ExcursionDetails.class);
                     intent.putExtra("id", current.getExcursionID());
                     intent.putExtra("name", current.getExcursionName());
-                    intent.putExtra("price", current.getPrice());
                     intent.putExtra("vacaID", current.getVacationID());
+                    intent.putExtra("excursionDate", current.getExcursionDate());
+                    intent.putExtra("vacationStartDate", vacationStartDate);
+                    intent.putExtra("vacationEndDate", vacationEndDate);
                     context.startActivity(intent);
                 }
             });
@@ -71,8 +75,8 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
             holder.excursionItemView2.setText(Integer.toString(vacaID));
         }
         else{
-            holder.excursionItemView.setText("No part name");
-            holder.excursionItemView.setText("No product id");
+            holder.excursionItemView.setText("No excursion name");
+            holder.excursionItemView.setText("No vacation id");
         }
     }
 
