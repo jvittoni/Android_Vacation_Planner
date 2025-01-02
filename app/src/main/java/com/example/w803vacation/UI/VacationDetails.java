@@ -72,6 +72,7 @@ public class VacationDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_vacation_details);
+        Toast.makeText(this, "Activity Loaded", Toast.LENGTH_LONG).show();
 
         repository = new Repository(getApplication());
 
@@ -143,6 +144,17 @@ public class VacationDetails extends AppCompatActivity {
         }
         excursionAdapter.setExcursions(filteredExcursions);
 
+        if (vacationStartDate != null) {
+            try {
+                Date startDate = sdf.parse(vacationStartDate);
+                Date endDate = sdf.parse(vacationEndDate);
+                myCalendarStart.setTime(startDate);
+                myCalendarEnd.setTime(endDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
         editVacaStartDate.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -150,7 +162,7 @@ public class VacationDetails extends AppCompatActivity {
                 Date date;
                 String info = editVacaStartDate.getText().toString();
 
-                if(info.equals(""))info="01/01/24";
+                if(info.equals(""))info= vacationStartDate;
                 try{
                     myCalendarStart.setTime(sdf.parse(info));
                 } catch (ParseException e) {
@@ -170,7 +182,7 @@ public class VacationDetails extends AppCompatActivity {
                 Date date;
                 String info = editVacaEndDate.getText().toString();
 
-                if(info.equals(""))info="01/01/24";
+                if(info.equals(""))info= vacationEndDate;
                 try{
                     myCalendarEnd.setTime(sdf.parse(info));
                 } catch (ParseException e) {
@@ -222,6 +234,7 @@ public class VacationDetails extends AppCompatActivity {
 
     }
 
+
     private void updateLabelStart() {
 
         String myFormat = "MM/dd/yy";
@@ -249,21 +262,56 @@ public class VacationDetails extends AppCompatActivity {
             this.finish();
             return true;
         }
+
         if (item.getItemId() == R.id.vacationsave) {
-            Vacation vacation;
-            if (vacationID == -1) {
-                if (repository.getxAllVacations().size() == 0) vacationID = 1;
-                else
-                    vacationID = repository.getxAllVacations().get(repository.getxAllVacations().size() - 1).getVacationID() + 1;
-                vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString(), editVacaStartDate.getText().toString(), editVacaEndDate.getText().toString());
-                repository.insert(vacation);
-                this.finish();
-            } else {
-                vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString(), editVacaStartDate.getText().toString(), editVacaEndDate.getText().toString());
-                repository.update(vacation);
-                this.finish();
+            String myFormat = "MM/dd/yy";
+            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+            String startDateString = sdf.format(myCalendarStart.getTime());
+            String endDateString = sdf.format(myCalendarEnd.getTime());
+            try {
+                Date startDate = sdf.parse(startDateString);
+                Date endDate = sdf.parse(endDateString);
+                if (endDate.before(startDate)) {
+                    Toast.makeText(VacationDetails.this, "End date must be AFTER start date", Toast.LENGTH_LONG).show();
+                } else {
+                    Vacation vacation;
+                    if (vacationID == -1) {
+                        if (repository.getxAllVacations().size() == 0) vacationID = 1;
+                        else
+                            vacationID = repository.getxAllVacations().get(repository.getxAllVacations().size() - 1).getVacationID() + 1;
+                        vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString(), editVacaStartDate.getText().toString(), editVacaEndDate.getText().toString());
+                        repository.insert(vacation);
+                        this.finish();
+                    } else {
+                        vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString(), editVacaStartDate.getText().toString(), editVacaEndDate.getText().toString());
+                        repository.update(vacation);
+                        this.finish();
+                    }
+
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
+
         }
+
+
+//        if (item.getItemId() == R.id.vacationsave) {
+//            Vacation vacation;
+//            if (vacationID == -1) {
+//                if (repository.getxAllVacations().size() == 0) vacationID = 1;
+//                else
+//                    vacationID = repository.getxAllVacations().get(repository.getxAllVacations().size() - 1).getVacationID() + 1;
+//                vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString(), editVacaStartDate.getText().toString(), editVacaEndDate.getText().toString());
+//                repository.insert(vacation);
+//                this.finish();
+//            } else {
+//                vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString(), editVacaStartDate.getText().toString(), editVacaEndDate.getText().toString());
+//                repository.update(vacation);
+//                this.finish();
+//            }
+//        }
+
         if (item.getItemId() == R.id.vacationdelete) {
             for (Vacation vaca : repository.getxAllVacations()) {
                 if (vaca.getVacationID() == vacationID) currentVacation = vaca;
@@ -376,6 +424,8 @@ public class VacationDetails extends AppCompatActivity {
         }
         excursionAdapter.setExcursions(filteredExcursions);
 
+        updateLabelStart();
+        updateLabelEnd();
     }
 
 
