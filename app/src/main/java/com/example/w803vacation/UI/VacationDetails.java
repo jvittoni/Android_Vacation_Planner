@@ -150,7 +150,7 @@ public class VacationDetails extends AppCompatActivity {
                 Date date;
                 String info = editVacaStartDate.getText().toString();
 
-                if(info.equals(""))info="12/01/24";
+                if(info.equals(""))info="01/01/24";
                 try{
                     myCalendarStart.setTime(sdf.parse(info));
                 } catch (ParseException e) {
@@ -170,7 +170,7 @@ public class VacationDetails extends AppCompatActivity {
                 Date date;
                 String info = editVacaEndDate.getText().toString();
 
-                if(info.equals(""))info="12/01/24";
+                if(info.equals(""))info="01/01/24";
                 try{
                     myCalendarEnd.setTime(sdf.parse(info));
                 } catch (ParseException e) {
@@ -376,8 +376,6 @@ public class VacationDetails extends AppCompatActivity {
         }
         excursionAdapter.setExcursions(filteredExcursions);
 
-        updateLabelStart();
-        updateLabelEnd();
     }
 
 
