@@ -1,7 +1,6 @@
 package com.example.w803vacation.UI;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -38,15 +37,15 @@ public class ExcursionDetails extends AppCompatActivity {
     String vacationStartDate;
     String endVacationDate;
     EditText editName;
-    TextView editDate;
-    String excursionDate;
+    TextView editExcursionDate;
+    String setExcursionDate;
 
     Excursion currentExcursion;
     Repository repository;
     Date startStartDate = null;
     Date endEndDate = null;
-    DatePickerDialog.OnDateSetListener startDate;
-    final Calendar myCalendarStart = Calendar.getInstance();
+    DatePickerDialog.OnDateSetListener excursionStartDate;
+    final Calendar myCalendarExcursionDate = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +55,19 @@ public class ExcursionDetails extends AppCompatActivity {
 
         repository = new Repository(getApplication());
         title = getIntent().getStringExtra("name");
-        excursionDate = getIntent().getStringExtra("excursionDate");
+        setExcursionDate = getIntent().getStringExtra("excursionDate");
         editName = findViewById(R.id.excursionTitle);
         editName.setText(title);
         excursionID = getIntent().getIntExtra("id", -1);
         vacaID = getIntent().getIntExtra("vacationID", -1);
         vacationStartDate = getIntent().getStringExtra("startVacationDate");
         endVacationDate = getIntent().getStringExtra("endVacationDate");
-        editDate = findViewById(R.id.excursiondate);
-        editDate.setText(excursionDate);
+        editExcursionDate = findViewById(R.id.excursiondate);
+        editExcursionDate.setText(setExcursionDate);
+
+        // Date Format Validation
+        String myFormat = "MM/dd/yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
 
         ArrayList<Vacation> vacationArrayList = new ArrayList<>();
@@ -98,40 +101,55 @@ public class ExcursionDetails extends AppCompatActivity {
             }
         });
 
-        editDate.setOnClickListener(new View.OnClickListener() {
+        if (setExcursionDate != null) {
+            try {
+                Date excursionDate = sdf.parse(setExcursionDate);
+                myCalendarExcursionDate.setTime(excursionDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        editExcursionDate.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 Date date;
 
-                String info = editDate.getText().toString();
-                if(info.equals("")) {
-                    info="01/01/24";
+                String info = editExcursionDate.getText().toString();
+                if(info.equals("")) info = setExcursionDate;
+                try {
+                    myCalendarExcursionDate.setTime(sdf.parse(info));
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
 
-                myCalendarStart.setTime(new Date());
+//                myCalendarExcursionStart.setTime(new Date());
                 new DatePickerDialog(
-                        ExcursionDetails.this, startDate, myCalendarStart
-                        .get(Calendar.YEAR), myCalendarStart.get(Calendar.MONTH),
-                        myCalendarStart.get(Calendar.DAY_OF_MONTH)).show();
+                        ExcursionDetails.this, excursionStartDate, myCalendarExcursionDate
+                        .get(Calendar.YEAR), myCalendarExcursionDate.get(Calendar.MONTH),
+                        myCalendarExcursionDate.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
-        startDate = new DatePickerDialog.OnDateSetListener() {
+        excursionStartDate = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                myCalendarStart.set(Calendar.YEAR, year);
-                myCalendarStart.set(Calendar.MONTH, monthOfYear);
-                myCalendarStart.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabelStart();
+                myCalendarExcursionDate.set(Calendar.YEAR, year);
+                myCalendarExcursionDate.set(Calendar.MONTH, monthOfYear);
+                myCalendarExcursionDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabelExcursionStart();
             }
 
         };
 
     }
 
-    private void updateLabelStart() {
-        editDate.setText(myCalendarStart.getTime().toString());
+    private void updateLabelExcursionStart() {
+        String myFormat = "MM/dd/yy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        editExcursionDate.setText(sdf.format(myCalendarExcursionDate.getTime()));
+//        editExcursionDate.setText(myCalendarExcursionStart.getTime().toString());
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -155,11 +173,11 @@ public class ExcursionDetails extends AppCompatActivity {
                     excursionID = 1;
                 else
                     excursionID = repository.getxAllExcursions().get(repository.getxAllExcursions().size() - 1).getExcursionID() + 1;
-                excursion = new Excursion(excursionID, editName.getText().toString(), vacaID, editDate.getText().toString());
+                excursion = new Excursion(excursionID, editName.getText().toString(), vacaID, editExcursionDate.getText().toString());
                 repository.insert(excursion);
                 this.finish();
             } else {
-                excursion = new Excursion(excursionID, editName.getText().toString(), vacaID, editDate.getText().toString());
+                excursion = new Excursion(excursionID, editName.getText().toString(), vacaID, editExcursionDate.getText().toString());
                 repository.update(excursion);
                 this.finish();
             }
@@ -177,5 +195,12 @@ public class ExcursionDetails extends AppCompatActivity {
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        updateLabelExcursionStart();
     }
 }
