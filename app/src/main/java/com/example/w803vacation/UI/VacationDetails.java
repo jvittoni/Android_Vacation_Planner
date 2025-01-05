@@ -197,10 +197,8 @@ public class VacationDetails extends AppCompatActivity {
         });
 
         vacaStartDate = new DatePickerDialog.OnDateSetListener() {
-
             @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
                 myCalendarStart.set(Calendar.YEAR, year);
                 myCalendarStart.set(Calendar.MONTH, monthOfYear);
@@ -223,7 +221,7 @@ public class VacationDetails extends AppCompatActivity {
 
                 // Validate that vacation end date is after vacation start date
                 if (myCalendarEnd.before(myCalendarStart)) {
-                    Toast.makeText(VacationDetails.this, "Vacation end date must be after vacation start date.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(VacationDetails.this, "Vacation end date must be AFTER vacation start date.", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -263,54 +261,54 @@ public class VacationDetails extends AppCompatActivity {
             return true;
         }
 
-        if (item.getItemId() == R.id.vacationsave) {
-            String myFormat = "MM/dd/yy";
-            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-            String startDateString = sdf.format(myCalendarStart.getTime());
-            String endDateString = sdf.format(myCalendarEnd.getTime());
-            try {
-                Date startDate = sdf.parse(startDateString);
-                Date endDate = sdf.parse(endDateString);
-                if (endDate.before(startDate)) {
-                    Toast.makeText(VacationDetails.this, "End date must be AFTER start date", Toast.LENGTH_LONG).show();
-                } else {
-                    Vacation vacation;
-                    if (vacationID == -1) {
-                        if (repository.getxAllVacations().size() == 0) vacationID = 1;
-                        else
-                            vacationID = repository.getxAllVacations().get(repository.getxAllVacations().size() - 1).getVacationID() + 1;
-                        vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString(), editVacaStartDate.getText().toString(), editVacaEndDate.getText().toString());
-                        repository.insert(vacation);
-                        this.finish();
-                    } else {
-                        vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString(), editVacaStartDate.getText().toString(), editVacaEndDate.getText().toString());
-                        repository.update(vacation);
-                        this.finish();
-                    }
-
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-
 //        if (item.getItemId() == R.id.vacationsave) {
-//            Vacation vacation;
-//            if (vacationID == -1) {
-//                if (repository.getxAllVacations().size() == 0) vacationID = 1;
-//                else
-//                    vacationID = repository.getxAllVacations().get(repository.getxAllVacations().size() - 1).getVacationID() + 1;
-//                vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString(), editVacaStartDate.getText().toString(), editVacaEndDate.getText().toString());
-//                repository.insert(vacation);
-//                this.finish();
-//            } else {
-//                vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString(), editVacaStartDate.getText().toString(), editVacaEndDate.getText().toString());
-//                repository.update(vacation);
-//                this.finish();
+//            String myFormat = "MM/dd/yy";
+//            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+//            String startDateString = sdf.format(myCalendarStart.getTime());
+//            String endDateString = sdf.format(myCalendarEnd.getTime());
+//            try {
+//                Date startDate = sdf.parse(startDateString);
+//                Date endDate = sdf.parse(endDateString);
+//                if (endDate.before(startDate)) {
+//                    Toast.makeText(VacationDetails.this, "End date must be AFTER start date", Toast.LENGTH_LONG).show();
+//                } else {
+//                    Vacation vacation;
+//                    if (vacationID == -1) {
+//                        if (repository.getxAllVacations().size() == 0) vacationID = 1;
+//                        else
+//                            vacationID = repository.getxAllVacations().get(repository.getxAllVacations().size() - 1).getVacationID() + 1;
+//                        vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString(), editVacaStartDate.getText().toString(), editVacaEndDate.getText().toString());
+//                        repository.insert(vacation);
+//                        this.finish();
+//                    } else {
+//                        vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString(), editVacaStartDate.getText().toString(), editVacaEndDate.getText().toString());
+//                        repository.update(vacation);
+//                        this.finish();
+//                    }
+//
+//                }
+//            } catch (ParseException e) {
+//                e.printStackTrace();
 //            }
+//
 //        }
+
+
+        if (item.getItemId() == R.id.vacationsave) {
+            Vacation vacation;
+            if (vacationID == -1) {
+                if (repository.getxAllVacations().size() == 0) vacationID = 1;
+                else
+                    vacationID = repository.getxAllVacations().get(repository.getxAllVacations().size() - 1).getVacationID() + 1;
+                vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString(), editVacaStartDate.getText().toString(), editVacaEndDate.getText().toString());
+                repository.insert(vacation);
+                this.finish();
+            } else {
+                vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString(), editVacaStartDate.getText().toString(), editVacaEndDate.getText().toString());
+                repository.update(vacation);
+                this.finish();
+            }
+        }
 
         if (item.getItemId() == R.id.vacationdelete) {
             for (Vacation vaca : repository.getxAllVacations()) {

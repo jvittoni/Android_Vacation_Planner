@@ -106,7 +106,7 @@ public class ExcursionDetails extends AppCompatActivity {
 
                 String info = editDate.getText().toString();
                 if(info.equals("")) {
-                    info="12/01/24";
+                    info="01/01/24";
                 }
 
                 myCalendarStart.setTime(new Date());

@@ -13,6 +13,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="75dp"
+        android:paddingTop="60dp"
+        android:paddingBottom="10dp"
         android:background="#cec2eb"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -26,13 +28,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:padding="10dp"
-                android:text="Placeholder: " />
+                android:text="Excursion Title: " />
 
             <EditText
                 android:id="@+id/excursionTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:hint="enter text"
+                android:hint="name of excursion"
                 android:inputType="text" />
         </LinearLayout>
 
@@ -47,14 +49,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:padding="10dp"
-                android:text="Date: " />
+                android:text="Excursion Date: " />
 
             <Button
                 android:id="@+id/excursiondate"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:backgroundTint="#faf6f6"
-                android:hint="Select"
+                android:hint="Select Excursion Date"
                 android:inputType="date"
                 android:textColor="#000000" />
         </LinearLayout>
