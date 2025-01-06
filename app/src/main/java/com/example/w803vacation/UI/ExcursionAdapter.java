@@ -44,7 +44,7 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
                     Intent intent = new Intent(context, ExcursionDetails.class);
                     intent.putExtra("id", current.getExcursionID());
                     intent.putExtra("name", current.getExcursionName());
-                    intent.putExtra("vacaID", current.getVacationID());
+                    intent.putExtra("vacationID", current.getVacationID());
                     intent.putExtra("excursionDate", current.getExcursionDate());
                     intent.putExtra("vacationStartDate", vacationStartDate);
                     intent.putExtra("vacationEndDate", vacationEndDate);
@@ -70,13 +70,13 @@ public class ExcursionAdapter extends RecyclerView.Adapter<ExcursionAdapter.Excu
         if(xExcursions!=null){
             Excursion current=xExcursions.get(position);
             String name=current.getExcursionName();
-            int vacaID= current.getVacationID();
+            int vacaID = current.getVacationID();
             holder.excursionItemView.setText(name);
             holder.excursionItemView2.setText(Integer.toString(vacaID));
         }
         else{
             holder.excursionItemView.setText("No excursion name");
-            holder.excursionItemView.setText("No vacation id");
+            holder.excursionItemView.setText("No excursion id");
         }
     }
 
