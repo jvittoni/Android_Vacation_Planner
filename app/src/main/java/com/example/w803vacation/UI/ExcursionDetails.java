@@ -266,7 +266,7 @@ public class ExcursionDetails extends AppCompatActivity {
             alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, sender);
             numAlert = rand.nextInt(99999);
             System.out.println("numAlert Excursion = " + numAlert);
-            Toast.makeText(this, "Excursion Date Alert has been set", Toast.LENGTH_LONG).show();
+            Toast.makeText(ExcursionDetails.this, "Excursion Date Alert has been set", Toast.LENGTH_LONG).show();
             this.finish();
             return true;
         }

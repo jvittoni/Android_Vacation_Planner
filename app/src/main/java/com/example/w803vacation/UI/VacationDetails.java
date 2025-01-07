@@ -261,54 +261,54 @@ public class VacationDetails extends AppCompatActivity {
             return true;
         }
 
-//        if (item.getItemId() == R.id.vacationsave) {
-//            String myFormat = "MM/dd/yy";
-//            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-//            String startDateString = sdf.format(myCalendarStart.getTime());
-//            String endDateString = sdf.format(myCalendarEnd.getTime());
-//            try {
-//                Date startDate = sdf.parse(startDateString);
-//                Date endDate = sdf.parse(endDateString);
-//                if (endDate.before(startDate)) {
-//                    Toast.makeText(VacationDetails.this, "End date must be AFTER start date", Toast.LENGTH_LONG).show();
-//                } else {
-//                    Vacation vacation;
-//                    if (vacationID == -1) {
-//                        if (repository.getxAllVacations().size() == 0) vacationID = 1;
-//                        else
-//                            vacationID = repository.getxAllVacations().get(repository.getxAllVacations().size() - 1).getVacationID() + 1;
-//                        vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString(), editVacaStartDate.getText().toString(), editVacaEndDate.getText().toString());
-//                        repository.insert(vacation);
-//                        this.finish();
-//                    } else {
-//                        vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString(), editVacaStartDate.getText().toString(), editVacaEndDate.getText().toString());
-//                        repository.update(vacation);
-//                        this.finish();
-//                    }
-//
-//                }
-//            } catch (ParseException e) {
-//                e.printStackTrace();
-//            }
-//
-//        }
-
-
         if (item.getItemId() == R.id.vacationsave) {
-            Vacation vacation;
-            if (vacationID == -1) {
-                if (repository.getxAllVacations().size() == 0) vacationID = 1;
-                else
-                    vacationID = repository.getxAllVacations().get(repository.getxAllVacations().size() - 1).getVacationID() + 1;
-                vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString(), editVacaStartDate.getText().toString(), editVacaEndDate.getText().toString());
-                repository.insert(vacation);
-                this.finish();
-            } else {
-                vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString(), editVacaStartDate.getText().toString(), editVacaEndDate.getText().toString());
-                repository.update(vacation);
-                this.finish();
+            String myFormat = "MM/dd/yy";
+            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+            String startDateString = sdf.format(myCalendarStart.getTime());
+            String endDateString = sdf.format(myCalendarEnd.getTime());
+            try {
+                Date startDate = sdf.parse(startDateString);
+                Date endDate = sdf.parse(endDateString);
+                if (endDate.before(startDate)) {
+                    Toast.makeText(VacationDetails.this, "Vacation end date must be AFTER vacation start date.", Toast.LENGTH_LONG).show();
+                } else {
+                    Vacation vacation;
+                    if (vacationID == -1) {
+                        if (repository.getxAllVacations().size() == 0) vacationID = 1;
+                        else
+                            vacationID = repository.getxAllVacations().get(repository.getxAllVacations().size() - 1).getVacationID() + 1;
+                        vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString(), editVacaStartDate.getText().toString(), editVacaEndDate.getText().toString());
+                        repository.insert(vacation);
+                        this.finish();
+                    } else {
+                        vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString(), editVacaStartDate.getText().toString(), editVacaEndDate.getText().toString());
+                        repository.update(vacation);
+                        this.finish();
+                    }
+
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
+
         }
+
+
+//        if (item.getItemId() == R.id.vacationsave) {
+//            Vacation vacation;
+//            if (vacationID == -1) {
+//                if (repository.getxAllVacations().size() == 0) vacationID = 1;
+//                else
+//                    vacationID = repository.getxAllVacations().get(repository.getxAllVacations().size() - 1).getVacationID() + 1;
+//                vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString(), editVacaStartDate.getText().toString(), editVacaEndDate.getText().toString());
+//                repository.insert(vacation);
+//                this.finish();
+//            } else {
+//                vacation = new Vacation(vacationID, editName.getText().toString(), editHotel.getText().toString(), editVacaStartDate.getText().toString(), editVacaEndDate.getText().toString());
+//                repository.update(vacation);
+//                this.finish();
+//            }
+//        }
 
         if (item.getItemId() == R.id.vacationdelete) {
             for (Vacation vaca : repository.getxAllVacations()) {
@@ -335,7 +335,8 @@ public class VacationDetails extends AppCompatActivity {
             String dateFromScreen = editVacaStartDate.getText().toString();
             String alert = "Vacation Starting Today: " + name;
             alertPicker(dateFromScreen, alert);
-
+            Toast.makeText(VacationDetails.this, "Vacation Start Date Alert has been set", Toast.LENGTH_LONG).show();
+            this.finish();
             return true;
         }
 
@@ -344,7 +345,8 @@ public class VacationDetails extends AppCompatActivity {
             String dateFromScreen = editVacaEndDate.getText().toString();
             String alert = "Vacation Ending Today: " + name;
             alertPicker(dateFromScreen, alert);
-
+            Toast.makeText(VacationDetails.this, "Vacation End Date Alert has been set", Toast.LENGTH_LONG).show();
+            this.finish();
             return true;
         }
 
@@ -357,7 +359,8 @@ public class VacationDetails extends AppCompatActivity {
             dateFromScreen = editVacaEndDate.getText().toString();
             alert = "Vacation Ending Today: " + name;
             alertPicker(dateFromScreen, alert);
-
+            Toast.makeText(VacationDetails.this, "Vacation Start and End Date Alert has been set", Toast.LENGTH_LONG).show();
+            this.finish();
             return true;
         }
 
