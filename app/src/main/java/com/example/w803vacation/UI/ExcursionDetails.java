@@ -79,6 +79,8 @@ public class ExcursionDetails extends AppCompatActivity {
         String myFormat = "MM/dd/yy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
+        numAlert = rand.nextInt(99999);
+
 
 //        ArrayList<Vacation> vacationArrayList = new ArrayList<>();
 //        vacationArrayList.addAll(repository.getxAllVacations());
