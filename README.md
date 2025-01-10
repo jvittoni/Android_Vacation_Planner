@@ -120,7 +120,9 @@ There are two pages where users are able to view their vacation’s excursion in
 <br>
 
 android:compileSdkVersion="35"
+
 android:minSdkVersion="35"
+
 android:targetSdkVersion="35"
 
 <br>
