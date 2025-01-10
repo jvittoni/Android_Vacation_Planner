@@ -115,6 +115,18 @@ There are two pages where users are able to view their vacation’s excursion in
 
 *_Tip: If the notifications are not appearing, make sure the app’s notifications are enabled. To do this, navigate to the app settings, select “Notifications”, and switch the button to the right. This will turn on notifications for the app and allow the user to be successfully alerted._
 
+<br>
+<hr>
+<br>
 
+android:compileSdkVersion="35"
+android:minSdkVersion="35"
+android:targetSdkVersion="35"
+
+<br>
+<hr>
+<br>
+
+Git Repository Link: https://github.com/jvittoni/VacationPlanner01/tree/working_branch
 
 
