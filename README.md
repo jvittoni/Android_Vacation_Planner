@@ -6,7 +6,7 @@ The purpose of the application is to provide a platform where the user can plan 
 <br>
 <br>
 
-# Application Operation Directions:
+# Application Operation Directions
 
 <br>
 
@@ -17,7 +17,7 @@ The purpose of the application is to provide a platform where the user can plan 
 
 <br>
 
-## Vacations:
+## Vacations
 
 ### Viewing Vacations:
 There are two pages where users are able to view their vacation information. The first is the vacation list page and the second is the vacation details page.
@@ -74,7 +74,7 @@ There are two pages where users are able to view their vacation information. The
 <br>
 <br>
 
-## Excursions:
+## Excursions
 
 ### Viewing Excursions:
 There are two pages where users are able to view their vacation’s excursion information. The first is the vacation details page and the second is the excursion details page.
