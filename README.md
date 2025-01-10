@@ -18,16 +18,16 @@ Users are able to track their vacation, the hotel they plan to stay at, the vaca
 
 ### **Vacations:**
 
-#### * Viewing Vacations
+* #### Viewing Vacations
 
 There are two pages where users are able to view their vacation information. The first is the vacation list page and the second is the vacation details page.
 
 1. **Vacation List Page**
-    To get to the vacation list page, the user will need to launch the app and then click the “Start Planning” button. This will then take the user to the vacation list page where they will be able to view a list of their vacations.
-        Important Notice: If no vacation has been added, this page will remain empty. Once a vacation has been added and saved, it will populate on this page.
+   a. To get to the vacation list page, the user will need to launch the app and then click the “Start Planning” button. This will then take the user to the vacation list page where they will be able to view a list of their vacations.
+        i. Important Notice: If no vacation has been added, this page will remain empty. Once a vacation has been added and saved, it will populate on this page.
 
 2. Vacation Details Page
-    To get to the vacation details page, the user will need to navigate to the vacation list page and then click on the vacation that they wish to see additional details about. Once they have clicked on the vacation, they will be taken to that vacation’s details page. This page will display a detailed view of the vacation’s information including the vacation’s title, hotel, start date, end date, and excursions (if there are associated excursions). This view can also be used to add and update the vacation information.
+    a. To get to the vacation details page, the user will need to navigate to the vacation list page and then click on the vacation that they wish to see additional details about. Once they have clicked on the vacation, they will be taken to that vacation’s details page. This page will display a detailed view of the vacation’s information including the vacation’s title, hotel, start date, end date, and excursions (if there are associated excursions). This view can also be used to add and update the vacation information.
 
 
 -> Adding, Saving, Editing, and Deleting Vacations
