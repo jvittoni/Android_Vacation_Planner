@@ -1,7 +1,7 @@
 # University Project
 
 ### About:
-This project was completed for the Android Mobile Application Development class at my university. The mobile app is compatible with Android 8.0 and higher. It is a vacation planner app that allows users to track their vacations and excursions. This Android app uses the Room Framework as an abstraction layer over the local SQLite database to save the data. The application operation directions for this app can be found below the project goal section on this page. 
+This project was completed for the Android Mobile Application Development class at my university. The mobile app is compatible with Android 8.0 and higher. It is a vacation planner app that allows users to track their vacations and excursions. This Android app uses the Room Framework as an abstraction layer over the local SQLite database to save the data. The detailed storyboard pdf is a highly detailed storyboard of the application's flow and its various operations. The simplified storyboard pdf demonstrates the app's flow of adding a vacation and an excursion. The application operation directions for this app can be found below the project goal section on this page. 
 
 <br>
 
